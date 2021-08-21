@@ -1,2 +1,4 @@
 /// <reference types="react-scripts" />
-declare module 'nav/Header'
+declare module 'core/Header'
+declare module 'core/Checkout'
+declare module 'core/ProductList'

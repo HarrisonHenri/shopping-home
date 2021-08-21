@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 const deps = require('./package.json').dependencies;
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: './src/index.ts',
@@ -26,14 +27,16 @@ module.exports = {
     ],
   },
   plugins: [
+    new CopyPlugin([{ from: "product", to: "product" }]),
     new ModuleFederationPlugin({
-      name: 'home',
-      library: { type: 'var', name: 'home' },
+      name: "home",
+      library: { type: "var", name: "home" },
+      filename: "remoteEntry.js",
       remotes: {
-        nav: 'nav',
+        core: 'core',
       },
       exposes: {
-        product: "./src/product",
+        './product': "./src/product",
       },
       shared: {
         ...deps,
